@@ -1,0 +1,73 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@font-face {
+  font-family: Geist;
+  src: url('/__l5e/assets-v1/09f3c227-ea22-45a2-9206-19d2019f9d18/Geist-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@theme inline {
+  --font-sans: Geist, sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  --background: #ececec;
+  --foreground: #274a66;
+  --primary: #274a66;
+  --primary-foreground: #ececec;
+  --secondary: #ececec;
+  --secondary-foreground: #274a66;
+  --muted: #ececec;
+  --muted-foreground: #374151;
+  --accent: #274a66;
+  --accent-foreground: #ececec;
+  --card: #ececec;
+  --card-foreground: #274a66;
+  --border: #274a66;
+  --input: #274a66;
+  --ring: #274a66;
+}
+
+@layer base {
+  * { box-sizing: border-box; border-color: var(--border); }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--background); color: var(--foreground); font-family: Geist, sans-serif; font-weight: 400; }
+  h1,h2,h3,h4 { font-weight: 400; letter-spacing: 0; }
+  p { color: var(--muted-foreground); font-size: 12px; line-height: 1.75; }
+  ::selection { background: var(--primary); color: var(--background); }
+}
+
+@utility editorial-image {
+  filter: grayscale(1);
+}
+@utility section-frame {
+  min-height: calc(100svh - 86px);
+}
+@utility ruled-link {
+  border-bottom: 1px solid var(--border);
+  transition: padding 250ms ease;
+  &:hover { padding-left: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
