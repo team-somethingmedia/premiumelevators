@@ -4,7 +4,8 @@
 
 @font-face {
   font-family: Geist;
-  src: url('/__l5e/assets-v1/09f3c227-ea22-45a2-9206-19d2019f9d18/Geist-Regular.ttf') format('truetype');
+  src: url("/__l5e/assets-v1/09f3c227-ea22-45a2-9206-19d2019f9d18/Geist-Regular.ttf")
+    format("truetype");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -48,26 +49,99 @@
 }
 
 @layer base {
-  * { box-sizing: border-box; border-color: var(--border); }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--background); color: var(--foreground); font-family: Geist, sans-serif; font-weight: 400; }
-  h1,h2,h3,h4 { font-weight: 400; letter-spacing: 0; }
-  p { color: var(--muted-foreground); font-size: 12px; line-height: 1.75; }
-  ::selection { background: var(--primary); color: var(--background); }
+  * {
+    box-sizing: border-box;
+    border-color: var(--border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Geist, sans-serif;
+    font-weight: 400;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+  p {
+    color: var(--muted-foreground);
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--background);
+  }
 }
 
 @utility editorial-image {
-  filter: grayscale(1);
+  filter: none;
 }
 @utility section-frame {
-  min-height: calc(100svh - 86px);
+  position: relative;
 }
 @utility ruled-link {
   border-bottom: 1px solid var(--border);
   transition: padding 250ms ease;
-  &:hover { padding-left: 8px; }
+  &:hover {
+    padding-left: 8px;
+  }
 }
+@utility hover-lift {
+  transition:
+    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+@utility pulse-indicator {
+  animation: elevatorPulse 2.4s infinite ease-in-out;
+}
+
+@keyframes elevatorPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes floorIndicator {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

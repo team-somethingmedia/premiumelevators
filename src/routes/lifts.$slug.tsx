@@ -1,12 +1,12 @@
-import { createFileRoute, Link, notFound } from '@tanstack/react-router'
-import { ArrowLink } from '@/components/site-shell'
-import { lifts, pageHead } from '@/lib/site-data'
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { ArrowLink } from "@/components/site-shell";
+import { lifts, pageHead } from "@/lib/site-data";
 
-export const Route = createFileRoute('/lifts/$slug')({
+export const Route = createFileRoute("/lifts/$slug")({
   loader: ({ params }) => {
-    const lift = lifts.find(x => x.slug === params.slug)
-    if (!lift) throw notFound()
-    return lift
+    const lift = lifts.find((x) => x.slug === params.slug);
+    if (!lift) throw notFound();
+    return lift;
   },
   head: ({ loaderData }) =>
     loaderData
@@ -14,38 +14,50 @@ export const Route = createFileRoute('/lifts/$slug')({
           `Best ${loaderData.name} in Ahmedabad & Baroda | Premium Elevators`,
           `Explore high-performance ${loaderData.name.toLowerCase()} in Ahmedabad and Baroda. ${loaderData.description} Contact Premium Elevators for dimensions, pricing and site survey.`,
           `/lifts/${loaderData.slug}`,
-          'product'
+          "product",
         )
-      : pageHead('Lift Not Found | Premium Elevators', 'This elevator page is unavailable. Explore our lift collection in Ahmedabad and Baroda.', '/lifts'),
+      : pageHead(
+          "Lift Not Found | Premium Elevators",
+          "This elevator page is unavailable. Explore our lift collection in Ahmedabad and Baroda.",
+          "/lifts",
+        ),
   component: LiftDetail,
-})
+});
 
 function LiftDetail() {
-  const lift = Route.useLoaderData()
+  const lift = Route.useLoaderData();
   return (
     <main>
       <section className="section-frame mx-auto grid min-h-[calc(100svh-86px)] max-w-[1560px] items-center gap-12 px-5 py-12 md:grid-cols-2 md:px-10 xl:px-16">
         <div>
-          <Link to="/lifts" className="mb-10 inline-block border-b border-primary pb-1 text-[12px] text-primary">
+          <Link
+            to="/lifts"
+            className="mb-8 inline-block border-b border-primary pb-1 text-[13px] text-primary"
+          >
             ← All lifts
           </Link>
-          <h1 className="max-w-[700px] text-[clamp(38px,5vw,72px)] leading-[1.06] text-primary">
+          <h1 className="max-w-[700px] text-[clamp(32px,4.5vw,56px)] leading-[1.12] text-primary">
             {lift.name} in Ahmedabad & Baroda.
           </h1>
-          <p className="mt-8 max-w-[500px] text-[12px] text-gray-700">{lift.description}</p>
-          
+          <p className="mt-6 max-w-[540px] text-[15px] md:text-[16px] leading-relaxed text-gray-700">
+            {lift.description}
+          </p>
+
           {lift.specs && (
-            <div className="mt-8 grid gap-2 border-t border-primary/20 pt-4">
-              {lift.specs.map(s => (
-                <div key={s.label} className="flex justify-between border-b border-primary/10 py-1.5 text-[12px]">
-                  <span className="text-primary">{s.label}</span>
+            <div className="mt-8 grid gap-2.5 border-t border-primary/20 pt-5">
+              {lift.specs.map((s) => (
+                <div
+                  key={s.label}
+                  className="flex justify-between border-b border-primary/10 py-2 text-[13.5px]"
+                >
+                  <span className="text-primary font-normal">{s.label}</span>
                   <span className="text-gray-700">{s.value}</span>
                 </div>
               ))}
             </div>
           )}
 
-          <div className="mt-10 flex flex-wrap gap-8">
+          <div className="mt-9 flex flex-wrap gap-8">
             <ArrowLink to="/contact">Request pricing & site survey</ArrowLink>
             <ArrowLink to="/services">Installation & AMC support</ArrowLink>
           </div>
@@ -63,12 +75,14 @@ function LiftDetail() {
 
       <section className="section-frame flex min-h-[calc(100svh-86px)] flex-col justify-center border-t border-primary/20 px-5 py-16 md:px-10 xl:px-16">
         <div className="mx-auto w-full max-w-[1432px]">
-          <h2 className="mb-8 text-[clamp(32px,4vw,60px)] leading-[1.05] text-primary">Explore other lifts for Gujarat properties.</h2>
+          <h2 className="mb-8 text-[clamp(26px,3.4vw,42px)] leading-[1.15] text-primary">
+            Explore other lifts for Gujarat properties.
+          </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {lifts
-              .filter(x => x.slug !== lift.slug)
+              .filter((x) => x.slug !== lift.slug)
               .slice(0, 6)
-              .map(x => (
+              .map((x) => (
                 <Link
                   key={x.slug}
                   to="/lifts/$slug"
@@ -83,5 +97,5 @@ function LiftDetail() {
         </div>
       </section>
     </main>
-  )
+  );
 }

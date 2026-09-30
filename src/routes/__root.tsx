@@ -83,7 +83,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "geo.placename", content: "Ahmedabad, Vadodara, Gujarat" },
       { name: "geo.position", content: "23.0225;72.5714" },
       { name: "ICBM", content: "23.0225, 72.5714" },
-      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+      {
+        name: "robots",
+        content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Premium Elevators" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -101,37 +104,38 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
-          "name": "Premium Elevators",
-          "alternateName": "Premium Elevators Gujarat",
-          "url": "https://premiumelevators.in",
-          "logo": "https://premiumelevators.in/logo.png",
-          "image": "https://premiumelevators.in/logo.png",
-          "description": "Leading manufacturer and service provider of home lifts, passenger elevators, hospital lifts, hydraulic lifts and goods elevators in Ahmedabad and Baroda.",
-          "email": "info@premiumelevators.in",
-          "priceRange": "₹₹₹",
-          "address": [
+          name: "Premium Elevators",
+          alternateName: "Premium Elevators Gujarat",
+          url: "https://premiumelevators.in",
+          logo: "https://premiumelevators.in/logo.png",
+          image: "https://premiumelevators.in/logo.png",
+          description:
+            "Leading manufacturer and service provider of home lifts, passenger elevators, hospital lifts, hydraulic lifts and goods elevators in Ahmedabad and Baroda.",
+          email: "info@premiumelevators.in",
+          priceRange: "₹₹₹",
+          address: [
             {
               "@type": "PostalAddress",
-              "streetAddress": "502, Parkview Prism, Umiya Dham Rd, next to Ganesh Pride, Khodiyar",
-              "addressLocality": "Ahmedabad",
-              "addressRegion": "Gujarat",
-              "postalCode": "382501",
-              "addressCountry": "IN"
+              streetAddress: "502, Parkview Prism, Umiya Dham Rd, next to Ganesh Pride, Khodiyar",
+              addressLocality: "Ahmedabad",
+              addressRegion: "Gujarat",
+              postalCode: "382501",
+              addressCountry: "IN",
             },
             {
               "@type": "PostalAddress",
-              "streetAddress": "A-343, Siddhath Annex-3, Nr. Dumad Circle, Vemali",
-              "addressLocality": "Vadodara",
-              "addressRegion": "Gujarat",
-              "postalCode": "390008",
-              "addressCountry": "IN"
-            }
+              streetAddress: "A-343, Siddhath Annex-3, Nr. Dumad Circle, Vemali",
+              addressLocality: "Vadodara",
+              addressRegion: "Gujarat",
+              postalCode: "390008",
+              addressCountry: "IN",
+            },
           ],
-          "areaServed": [
-            { "@type": "City", "name": "Ahmedabad" },
-            { "@type": "City", "name": "Vadodara" },
-            { "@type": "State", "name": "Gujarat" }
-          ]
+          areaServed: [
+            { "@type": "City", name: "Ahmedabad" },
+            { "@type": "City", name: "Vadodara" },
+            { "@type": "State", name: "Gujarat" },
+          ],
         }),
       },
     ],
