@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const LEVELS = [
-  { id: "hero-level", label: "L01", name: "Hero / Level 01" },
+  { id: "hero-level", label: "L01", name: "Overview" },
   { id: "lift-collection", label: "L02", name: "Catalogue" },
   { id: "specs-matrix", label: "L03", name: "Specs Matrix" },
   { id: "elevator-3d-simulator", label: "L04", name: "3D Simulator" },

@@ -50,7 +50,11 @@ export function ElevatorScrollHUD({ levels }: { levels: LevelItem[] }) {
   const scrollToLevel = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      if (typeof window !== "undefined" && (window as any).lenis) {
+        (window as any).lenis.scrollTo(el, { offset: -20, duration: 1.2 });
+      } else {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 
@@ -70,8 +74,8 @@ export function ElevatorScrollHUD({ levels }: { levels: LevelItem[] }) {
         className="fixed right-4 top-1/2 -translate-y-1/2 z-30 hidden lg:flex flex-col items-center select-none"
       >
         {/* Elevator Car Indicator Badge */}
-        <div className="mb-3 border border-primary bg-background px-2 py-1 text-[11px] text-primary shadow-sm">
-          <span className="inline-block font-mono">{levels[currentLevel]?.label || "L01"}</span>
+        <div className="mb-3 border border-primary bg-background px-2.5 py-1 text-[11.5px] text-primary shadow-xs">
+          <span className="inline-block font-medium">{levels[currentLevel]?.label || "L01"}</span>
         </div>
 
         {/* Vertical Shaft Cable Track */}
@@ -107,17 +111,13 @@ export function ElevatorScrollHUD({ levels }: { levels: LevelItem[] }) {
                     }`}
                   />
                   {/* Tooltip on hover */}
-                  <span className="invisible absolute right-6 whitespace-nowrap border border-primary/30 bg-background px-2 py-0.5 text-[11px] text-primary opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 shadow-none">
-                    {level.label} · {level.name}
+                  <span className="invisible absolute right-6 whitespace-nowrap border border-primary/30 bg-background px-2.5 py-1 text-[12px] text-primary opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 shadow-xs font-normal">
+                    {level.name}
                   </span>
                 </button>
               );
             })}
           </div>
-        </div>
-
-        <div className="mt-3 text-[9px] text-primary/60 uppercase tracking-widest font-mono">
-          SHAFT
         </div>
       </aside>
     </>

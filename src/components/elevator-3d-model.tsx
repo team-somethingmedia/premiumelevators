@@ -6,9 +6,16 @@ export function Elevator3DExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentFloor, setCurrentFloor] = useState<number>(1);
   const [isMoving, setIsMoving] = useState<boolean>(false);
+  const [webGlSupported, setWebGlSupported] = useState<boolean>(true);
   const carGroupRef = useRef<THREE.Group | null>(null);
   const counterweightRef = useRef<THREE.Mesh | null>(null);
   const pulleyRef = useRef<THREE.Group | null>(null);
+  const directionRef = useRef<number>(1); // 1 = ascending, -1 = descending
+  const currentFloorRef = useRef<number>(1);
+
+  useEffect(() => {
+    currentFloorRef.current = currentFloor;
+  }, [currentFloor]);
 
   useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
@@ -17,16 +24,24 @@ export function Elevator3DExperience() {
     const width = container.clientWidth || 600;
     const height = container.clientHeight || 450;
 
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    } catch (e) {
+      console.warn("WebGL not supported, falling back to static visual", e);
+      setWebGlSupported(false);
+      return;
+    }
+
     // 1. Scene & Camera
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 100);
     camera.position.set(5.5, 3, 7.5);
     camera.lookAt(0, 2.5, 0);
 
-    // 2. Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    // 2. Renderer Config
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.innerHTML = "";
@@ -59,11 +74,6 @@ export function Elevator3DExperience() {
       metalness: 0.1,
       transmission: 0.7,
       ior: 1.5,
-    });
-    const wireframeMat = new THREE.LineBasicMaterial({
-      color: 0x274a66,
-      transparent: true,
-      opacity: 0.3,
     });
     const floorMarkMat = new THREE.LineBasicMaterial({
       color: 0x274a66,
@@ -98,64 +108,84 @@ export function Elevator3DExperience() {
     for (let i = 0; i <= 4; i++) {
       const ringY = i * 1.8 + 0.4;
       const boxGeo = new THREE.BoxGeometry(shaftWidth, 0.04, shaftDepth);
-      const wireGeo = new THREE.WireframeGeometry(boxGeo);
-      const ring = new THREE.LineSegments(wireGeo, floorMarkMat);
-      ring.position.set(0, ringY, 0);
-      shaftGroup.add(ring);
+      const ringEdges = new THREE.EdgesGeometry(boxGeo);
+      const ringLine = new THREE.LineSegments(ringEdges, floorMarkMat);
+      ringLine.position.set(0, ringY, 0);
+      shaftGroup.add(ringLine);
+
+      // Floor Landing Plate
+      const floorPlateGeo = new THREE.BoxGeometry(shaftWidth + 0.2, 0.08, 0.6);
+      const floorPlate = new THREE.Mesh(floorPlateGeo, steelMat);
+      floorPlate.position.set(0, ringY, shaftDepth / 2 + 0.3);
+      shaftGroup.add(floorPlate);
     }
 
-    // Top Machine Overhead Beam & Pulley
-    const topBeam = new THREE.Mesh(
-      new THREE.BoxGeometry(shaftWidth + 0.4, 0.15, shaftDepth + 0.4),
-      steelMat,
-    );
-    topBeam.position.set(0, shaftHeight, 0);
-    shaftGroup.add(topBeam);
+    // Overhead Machine / Traction Sheave at top
+    const machineGroup = new THREE.Group();
+    machineGroup.position.set(0, shaftHeight + 0.4, 0);
+    scene.add(machineGroup);
 
-    const pulleyGroup = new THREE.Group();
-    const pulleyGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.1, 24);
-    pulleyGeo.rotateZ(Math.PI / 2);
-    const pulley = new THREE.Mesh(pulleyGeo, steelMat);
-    pulleyGroup.position.set(0, shaftHeight - 0.25, 0);
-    pulleyGroup.add(pulley);
-    scene.add(pulleyGroup);
-    pulleyRef.current = pulleyGroup;
+    const sheaveGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.18, 24);
+    const sheaveMat = new THREE.MeshStandardMaterial({
+      color: 0x274a66,
+      roughness: 0.25,
+      metalness: 0.85,
+    });
+    const sheave = new THREE.Mesh(sheaveGeo, sheaveMat);
+    sheave.rotation.z = Math.PI / 2;
+    machineGroup.add(sheave);
+    pulleyRef.current = machineGroup;
 
-    // 6. Elevator Cabin (Car)
+    // 6. Elevator Cabin (Car Group)
     const carGroup = new THREE.Group();
+    carGroup.position.set(0, 0.4, 0); // starts at floor 1
     scene.add(carGroup);
     carGroupRef.current = carGroup;
 
-    // Cabin Base Floor & Ceiling
-    const carFloor = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.08, 1.6), steelMat);
-    carFloor.position.set(0, 0.04, 0);
-    carGroup.add(carFloor);
+    // Car Floor / Ceiling
+    const carBaseGeo = new THREE.BoxGeometry(1.7, 0.12, 1.7);
+    const carBase = new THREE.Mesh(carBaseGeo, steelMat);
+    carBase.position.set(0, 0.06, 0);
+    carBase.receiveShadow = true;
+    carGroup.add(carBase);
 
-    const carCeiling = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.08, 1.6), steelMat);
-    carCeiling.position.set(0, 1.7, 0);
-    carGroup.add(carCeiling);
+    const carRoof = new THREE.Mesh(carBaseGeo, steelMat);
+    carRoof.position.set(0, 1.65, 0);
+    carGroup.add(carRoof);
 
-    // Glass Walls (3 sides)
-    const backWall = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.6, 0.04), glassMat);
-    backWall.position.set(0, 0.88, -0.78);
+    // Car Glass Walls
+    const wallGeo = new THREE.BoxGeometry(1.68, 1.5, 0.04);
+
+    // Back wall
+    const backWall = new THREE.Mesh(wallGeo, glassMat);
+    backWall.position.set(0, 0.85, -0.83);
     carGroup.add(backWall);
 
-    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.6, 1.5), glassMat);
-    leftWall.position.set(-0.78, 0.88, 0);
+    // Left wall
+    const sideWallGeo = new THREE.BoxGeometry(0.04, 1.5, 1.68);
+    const leftWall = new THREE.Mesh(sideWallGeo, glassMat);
+    leftWall.position.set(-0.83, 0.85, 0);
     carGroup.add(leftWall);
 
-    const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.04, 1.6, 1.5), glassMat);
-    rightWall.position.set(0.78, 0.88, 0);
+    // Right wall
+    const rightWall = new THREE.Mesh(sideWallGeo, glassMat);
+    rightWall.position.set(0.83, 0.85, 0);
     carGroup.add(rightWall);
 
-    // Cabin Frame Edges
-    const carFrameGeo = new THREE.WireframeGeometry(new THREE.BoxGeometry(1.6, 1.7, 1.6));
-    const carFrame = new THREE.LineSegments(carFrameGeo, wireframeMat);
-    carFrame.position.set(0, 0.88, 0);
-    carGroup.add(carFrame);
+    // Front Sliding Doors (Bi-parting style)
+    const doorGeo = new THREE.BoxGeometry(0.72, 1.5, 0.04);
+    const leftDoor = new THREE.Mesh(doorGeo, steelMat);
+    leftDoor.position.set(-0.4, 0.85, 0.83);
+    carGroup.add(leftDoor);
 
-    // Initial position at Floor 1 (Y = 0.4)
-    carGroup.position.set(0, 0.4, 0);
+    const rightDoor = new THREE.Mesh(doorGeo, steelMat);
+    rightDoor.position.set(0.4, 0.85, 0.83);
+    carGroup.add(rightDoor);
+
+    // Cabin Interior Light
+    const carLight = new THREE.PointLight(0xffffff, 1.1, 4);
+    carLight.position.set(0, 1.5, 0);
+    carGroup.add(carLight);
 
     // 7. Counterweight (moves inverse to cabin)
     const cwGeo = new THREE.BoxGeometry(0.8, 1.0, 0.15);
@@ -178,20 +208,30 @@ export function Elevator3DExperience() {
     const cableLine = new THREE.Line(cableGeo, cableMat);
     scene.add(cableLine);
 
-    // Mouse interactive rotation
-    let mouseX = 0;
+    // Mouse & Touch interactive rotation
     let targetRotationY = 0.35;
     let targetRotationX = 0.08;
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerCoord = (clientX: number, clientY: number) => {
       const rect = container.getBoundingClientRect();
-      const relX = (e.clientX - rect.left) / rect.width - 0.5;
-      const relY = (e.clientY - rect.top) / rect.height - 0.5;
-      targetRotationY = relX * 0.75 + 0.35;
-      targetRotationX = relY * 0.4 + 0.08;
+      const relX = (clientX - rect.left) / rect.width - 0.5;
+      const relY = (clientY - rect.top) / rect.height - 0.5;
+      targetRotationY = relX * 0.85 + 0.35;
+      targetRotationX = relY * 0.45 + 0.08;
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      handlePointerCoord(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        handlePointerCoord(e.touches[0].clientX, e.touches[0].clientY);
+      }
     };
 
     container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("touchmove", handleTouchMove, { passive: true });
 
     // Render loop
     let reqId: number;
@@ -231,6 +271,7 @@ export function Elevator3DExperience() {
     return () => {
       cancelAnimationFrame(reqId);
       container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("resize", handleResize);
       renderer.dispose();
       scene.clear();
@@ -241,25 +282,36 @@ export function Elevator3DExperience() {
   }, []);
 
   const goToFloor = (floorNumber: number) => {
-    if (isMoving || floorNumber === currentFloor) return;
+    if (floorNumber === currentFloorRef.current) return;
+    const fromFloor = currentFloorRef.current;
+    
+    // Set direction appropriately
+    if (floorNumber > fromFloor) {
+      directionRef.current = 1;
+    } else {
+      directionRef.current = -1;
+    }
+
     setIsMoving(true);
     setCurrentFloor(floorNumber);
 
     const targetY = (floorNumber - 1) * 1.5 + 0.4;
     const targetCwY = 8 - targetY - 1.2;
+    const floorDiff = Math.abs(floorNumber - fromFloor);
+    const duration = Math.min(1.3 + floorDiff * 0.25, 2.0);
 
     if (carGroupRef.current && counterweightRef.current && pulleyRef.current) {
       // Pulley spin animation
       gsap.to(pulleyRef.current.rotation, {
-        x: `+=${(floorNumber - currentFloor) * Math.PI * 1.5}`,
-        duration: 1.6,
+        x: `+=${(floorNumber - fromFloor) * Math.PI * 1.5}`,
+        duration: duration,
         ease: "power2.inOut",
       });
 
       // Cabin Travel
       gsap.to(carGroupRef.current.position, {
         y: targetY,
-        duration: 1.6,
+        duration: duration,
         ease: "power2.inOut",
         onComplete: () => setIsMoving(false),
       });
@@ -267,54 +319,72 @@ export function Elevator3DExperience() {
       // Counterweight inverse travel
       gsap.to(counterweightRef.current.position, {
         y: targetCwY,
-        duration: 1.6,
+        duration: duration,
         ease: "power2.inOut",
       });
+    } else {
+      setIsMoving(false);
     }
   };
 
+  // Continuous auto-cycling through floors
+  useEffect(() => {
+    if (isMoving) return;
+
+    const timer = setTimeout(() => {
+      let next = currentFloorRef.current + directionRef.current;
+      if (next > 5) {
+        directionRef.current = -1;
+        next = 4;
+      } else if (next < 1) {
+        directionRef.current = 1;
+        next = 2;
+      }
+      goToFloor(next);
+    }, 2400);
+
+    return () => clearTimeout(timer);
+  }, [currentFloor, isMoving]);
+
   return (
-    <div className="relative w-full border border-primary/25 bg-background shadow-xs overflow-hidden">
-      {/* Top 3D Model Header & Telemetry */}
-      <div className="flex items-center justify-between border-b border-primary/20 p-4 text-[12.5px] text-primary font-mono bg-primary/[0.02]">
-        <div className="flex items-center gap-2.5">
-          <span className="h-2 w-2 rounded-full bg-primary pulse-indicator" />
-          <span>3D SHAFT SIMULATION // IS 14665</span>
-        </div>
-        <div className="flex items-center gap-3">
-          <span>FLOOR: {currentFloor.toString().padStart(2, "0")}</span>
-          <span className="text-primary/30">|</span>
-          <span>{isMoving ? "STATUS: IN-TRANSIT" : "STATUS: LEVEL"}</span>
-        </div>
+    <div className="relative w-full rounded-2xl border border-primary/20 bg-background shadow-xs overflow-hidden">
+      {/* 3D Model Header */}
+      <div className="flex items-center justify-between border-b border-primary/15 px-4 py-2.5 text-[12.5px] text-primary bg-primary/[0.02]">
+        <span className="font-medium">Hoistway & Cabin Simulator</span>
+        <span className="text-[12px] text-gray-700 font-medium">
+          {isMoving ? "Elevator in transit..." : `Cabin at Floor ${currentFloor}`}
+        </span>
       </div>
 
       {/* Three.js Canvas Container */}
-      <div
-        ref={containerRef}
-        className="h-[360px] md:h-[420px] w-full cursor-grab active:cursor-grabbing"
-      />
+      <div className="relative">
+        <div
+          ref={containerRef}
+          className="h-[200px] sm:h-[240px] md:h-[260px] lg:h-[280px] w-full cursor-grab active:cursor-grabbing touch-pan-y"
+        />
+      </div>
 
       {/* Interactive Floor Call Station Bar */}
-      <div className="border-t border-primary/20 p-4 bg-background flex flex-wrap items-center justify-between gap-4">
-        <div className="text-[13px] text-gray-700">
-          <span className="font-mono text-primary font-medium">Interactive Dispatch: </span>
-          <span>Click floor call buttons to test vertical transit kinetics.</span>
+      <div className="border-t border-primary/15 px-4 py-2.5 bg-background flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-2 text-[12px]">
+          <span className="font-medium text-primary">Dispatch Elevator:</span>
+          <span className="text-gray-700 hidden sm:inline">Click a floor button to animate transit</span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           {[1, 2, 3, 4, 5].map((fl) => (
             <button
               key={fl}
               type="button"
               onClick={() => goToFloor(fl)}
-              disabled={isMoving}
-              className={`h-8 w-9 border text-[12px] font-mono transition-all duration-200 ${
+              title={`Dispatch elevator cabin to Floor ${fl}`}
+              className={`h-7 min-w-7 px-2.5 rounded-md border text-[12px] font-medium transition-all duration-300 cursor-pointer ${
                 currentFloor === fl
-                  ? "border-primary bg-primary text-background font-medium shadow-xs"
-                  : "border-primary/30 bg-background text-primary hover:border-primary hover:bg-primary/5"
+                  ? "border-primary bg-primary text-background shadow-xs ring-1 ring-primary/20 scale-105"
+                  : "border-primary/25 bg-background text-primary hover:border-primary hover:bg-primary/10 hover:scale-105 active:scale-95"
               }`}
             >
-              L0{fl}
+              Floor {fl}
             </button>
           ))}
         </div>

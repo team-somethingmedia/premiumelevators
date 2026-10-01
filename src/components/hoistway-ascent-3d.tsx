@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import gsap from "gsap";
 
@@ -11,6 +11,7 @@ export function HoistwayAscent3D({ activePhase, onPhaseChange }: HoistwayAscent3
   const containerRef = useRef<HTMLDivElement>(null);
   const cabinRef = useRef<THREE.Group | null>(null);
   const glowRingRef = useRef<THREE.Mesh | null>(null);
+  const [webGlSupported, setWebGlSupported] = useState(true);
 
   useEffect(() => {
     if (typeof window === "undefined" || !containerRef.current) return;
@@ -19,6 +20,15 @@ export function HoistwayAscent3D({ activePhase, onPhaseChange }: HoistwayAscent3
     const width = container.clientWidth || 500;
     const height = container.clientHeight || 400;
 
+    let renderer: THREE.WebGLRenderer;
+    try {
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+    } catch (e) {
+      console.warn("WebGL not supported in HoistwayAscent3D", e);
+      setWebGlSupported(false);
+      return;
+    }
+
     // 1. Scene & Camera
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
@@ -26,9 +36,8 @@ export function HoistwayAscent3D({ activePhase, onPhaseChange }: HoistwayAscent3
     camera.lookAt(0, 3.2, 0);
 
     // 2. Renderer
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     container.innerHTML = "";
     container.appendChild(renderer.domElement);
 
@@ -80,77 +89,96 @@ export function HoistwayAscent3D({ activePhase, onPhaseChange }: HoistwayAscent3
       ringMesh.position.set(0, y, 0);
       towerGroup.add(ringMesh);
 
-      // Wireframe contour
-      const wire = new THREE.LineSegments(
-        new THREE.WireframeGeometry(new THREE.BoxGeometry(2.4, 0.08, 2.4)),
-        new THREE.LineBasicMaterial({ color: 0x274a66, opacity: 0.35, transparent: true }),
+      // Floor marker ring
+      const edgeGeo = new THREE.EdgesGeometry(ringGeo);
+      const edgeLine = new THREE.LineSegments(
+        edgeGeo,
+        new THREE.LineBasicMaterial({ color: 0x274a66, opacity: 0.4, transparent: true })
       );
-      wire.position.set(0, y, 0);
-      towerGroup.add(wire);
+      edgeLine.position.set(0, y, 0);
+      towerGroup.add(edgeLine);
     });
 
-    // 6. Traveling 3D Elevator Cabin
+    // 6. Active Elevator Cabin Marker
     const cabinGroup = new THREE.Group();
+    cabinGroup.position.set(0, platformHeights[activePhase] + 0.04, 0);
     scene.add(cabinGroup);
     cabinRef.current = cabinGroup;
 
-    const carBase = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.08, 1.4), steelMat);
-    cabinGroup.add(carBase);
+    const cabBaseGeo = new THREE.BoxGeometry(1.3, 0.08, 1.3);
+    const cabBase = new THREE.Mesh(cabBaseGeo, steelMat);
+    cabinGroup.add(cabBase);
 
-    const carTop = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.08, 1.4), steelMat);
-    carTop.position.set(0, 1.4, 0);
-    cabinGroup.add(carTop);
+    const cabRoof = new THREE.Mesh(cabBaseGeo, steelMat);
+    cabRoof.position.set(0, 1.3, 0);
+    cabinGroup.add(cabRoof);
 
-    const carGlass = new THREE.Mesh(new THREE.BoxGeometry(1.3, 1.3, 1.3), glassMat);
-    carGlass.position.set(0, 0.7, 0);
-    cabinGroup.add(carGlass);
+    const cabWallGeo = new THREE.BoxGeometry(1.28, 1.2, 0.04);
+    const cabBackWall = new THREE.Mesh(cabWallGeo, glassMat);
+    cabBackWall.position.set(0, 0.65, -0.62);
+    cabinGroup.add(cabBackWall);
 
-    const carEdges = new THREE.LineSegments(
-      new THREE.WireframeGeometry(new THREE.BoxGeometry(1.4, 1.4, 1.4)),
-      new THREE.LineBasicMaterial({ color: 0x274a66, opacity: 0.8 }),
-    );
-    carEdges.position.set(0, 0.7, 0);
-    cabinGroup.add(carEdges);
+    const cabSideGeo = new THREE.BoxGeometry(0.04, 1.2, 1.28);
+    const cabLeftWall = new THREE.Mesh(cabSideGeo, glassMat);
+    cabLeftWall.position.set(-0.62, 0.65, 0);
+    cabinGroup.add(cabLeftWall);
 
-    // Active Altitude Pulse Ring
-    const glowGeo = new THREE.TorusGeometry(1.7, 0.03, 16, 40);
-    glowGeo.rotateX(Math.PI / 2);
-    const glowMesh = new THREE.Mesh(
-      glowGeo,
-      new THREE.MeshBasicMaterial({ color: 0x274a66, wireframe: true }),
-    );
-    glowMesh.position.set(0, platformHeights[0], 0);
-    scene.add(glowMesh);
-    glowRingRef.current = glowMesh;
+    const cabRightWall = new THREE.Mesh(cabSideGeo, glassMat);
+    cabRightWall.position.set(0.62, 0.65, 0);
+    cabinGroup.add(cabRightWall);
 
-    // Set initial position
-    cabinGroup.position.set(0, platformHeights[0] + 0.04, 0);
+    // Active floor pulsing indicator ring
+    const glowGeo = new THREE.TorusGeometry(1.8, 0.03, 16, 64);
+    const glowMat = new THREE.MeshBasicMaterial({
+      color: 0x274a66,
+      transparent: true,
+      opacity: 0.6,
+    });
+    const glowRing = new THREE.Mesh(glowGeo, glowMat);
+    glowRing.rotation.x = Math.PI / 2;
+    glowRing.position.set(0, platformHeights[activePhase], 0);
+    scene.add(glowRing);
+    glowRingRef.current = glowRing;
 
-    // Mouse rotation
-    let mouseX = 0;
-    let targetRotationY = 0.45;
+    // Mouse & Touch Orbit Controls
+    let targetRotationY = 0.4;
+    let targetRotationX = 0.1;
+
+    const handlePointerCoord = (clientX: number, clientY: number) => {
+      const rect = container.getBoundingClientRect();
+      const relX = (clientX - rect.left) / rect.width - 0.5;
+      const relY = (clientY - rect.top) / rect.height - 0.5;
+      targetRotationY = relX * 0.9 + 0.4;
+      targetRotationX = relY * 0.4 + 0.1;
+    };
 
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = container.getBoundingClientRect();
-      const relX = (e.clientX - rect.left) / rect.width - 0.5;
-      targetRotationY = relX * 0.8 + 0.45;
+      handlePointerCoord(e.clientX, e.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length > 0) {
+        handlePointerCoord(e.touches[0].clientX, e.touches[0].clientY);
+      }
     };
 
     container.addEventListener("mousemove", handleMouseMove);
+    container.addEventListener("touchmove", handleTouchMove, { passive: true });
 
-    // Render loop
+    // Animation Loop
     let reqId: number;
     const animate = () => {
       reqId = requestAnimationFrame(animate);
 
-      // Smooth camera orbit
-      camera.position.x += (Math.sin(targetRotationY) * 8.5 - camera.position.x) * 0.05;
-      camera.position.z += (Math.cos(targetRotationY) * 8.5 - camera.position.z) * 0.05;
+      // Camera smooth interpolation
+      camera.position.x += (Math.sin(targetRotationY) * 9.0 - camera.position.x) * 0.05;
+      camera.position.z += (Math.cos(targetRotationY) * 9.0 - camera.position.z) * 0.05;
+      camera.position.y += (4.0 + targetRotationX * 3.5 - camera.position.y) * 0.05;
       camera.lookAt(0, 3.4, 0);
 
       // Idle subtle glow rotation
       if (glowRingRef.current) {
-        glowRingRef.current.rotation.y += 0.01;
+        glowRingRef.current.rotation.z += 0.01;
       }
 
       renderer.render(scene, camera);
@@ -172,6 +200,7 @@ export function HoistwayAscent3D({ activePhase, onPhaseChange }: HoistwayAscent3
     return () => {
       cancelAnimationFrame(reqId);
       container.removeEventListener("mousemove", handleMouseMove);
+      container.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("resize", handleResize);
       renderer.dispose();
       scene.clear();
@@ -202,35 +231,32 @@ export function HoistwayAscent3D({ activePhase, onPhaseChange }: HoistwayAscent3
   }, [activePhase]);
 
   return (
-    <div className="relative w-full border border-primary/25 bg-background shadow-xs overflow-hidden">
-      <div className="flex items-center justify-between border-b border-primary/20 p-3.5 text-[12px] font-mono text-primary bg-primary/[0.02]">
-        <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-primary pulse-indicator" />
-          <span>3D ASCENSION TRACKER</span>
-        </div>
-        <div>ELEVATION STAGE 0{activePhase + 1} // 04</div>
+    <div className="relative w-full rounded-2xl border border-primary/20 bg-background shadow-xs overflow-hidden flex flex-col justify-between">
+      <div className="flex items-center justify-between border-b border-primary/15 px-4 py-2.5 text-[13px] text-primary bg-primary/[0.02]">
+        <span className="font-medium">Engineering Milestones</span>
+        <span className="text-[12px] text-gray-700">Phase {activePhase + 1} of 4</span>
       </div>
 
       <div
         ref={containerRef}
-        className="h-[320px] md:h-[380px] w-full cursor-grab active:cursor-grabbing"
+        className="h-[240px] sm:h-[270px] lg:h-[290px] w-full cursor-grab active:cursor-grabbing touch-pan-y"
       />
 
-      <div className="border-t border-primary/20 p-3 bg-background flex items-center justify-between text-[12px] font-mono">
-        <span className="text-gray-700">HOISTWAY TRAJECTORY:</span>
-        <div className="flex gap-2">
+      <div className="border-t border-primary/15 px-4 py-2.5 bg-background flex items-center justify-between text-[12.5px]">
+        <span className="text-gray-700">Select phase:</span>
+        <div className="flex gap-1.5">
           {[0, 1, 2, 3].map((idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => onPhaseChange?.(idx)}
-              className={`px-2 py-0.5 border transition-all ${
+              className={`h-7 min-w-7 px-2.5 rounded-md border text-[12px] transition-all cursor-pointer ${
                 activePhase === idx
-                  ? "border-primary bg-primary text-background font-medium"
-                  : "border-primary/25 text-primary hover:border-primary"
+                  ? "border-primary bg-primary text-background font-medium shadow-xs"
+                  : "border-primary/20 text-primary hover:border-primary/60 hover:bg-primary/5"
               }`}
             >
-              0{idx + 1}
+              Phase {idx + 1}
             </button>
           ))}
         </div>

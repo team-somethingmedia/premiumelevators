@@ -7,6 +7,21 @@ import motor from "@/assets/elevator-motor.jpg";
 
 export const images = { hero, home, goods, capsule, hospital, motor };
 
+export const illustrations3d = {
+  motor: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-Co7Y43IXIqna0bWJp09V4VrXP1K7am.png",
+  smartController: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-2vL1JW6NYs6a2F7CbJASnaaSnVRtPJ.png",
+  laserSurvey: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-bk0Blvw2h3YpUL2VCEW6BCTIHw3mxW.png",
+  safetyGovernor: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-kXBt6eBKGhBMvWpMgAfvEgOJyq8e6F.png",
+  safetyShield: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-kXBt6eBKGhBMvWpMgAfvEgOJyq8e6F.png",
+  panoramicCapsule: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-2vL1JW6NYs6a2F7CbJASnaaSnVRtPJ.png",
+  copPanel: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-ZGC3nm3RAnS0v1Gpj5NVIOhFfyEA99.png",
+  ecoDrive: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-TY2nnUu2xdWPP6NExiQYrp4LodTAP4.png",
+  toolbox: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-d7lf8LhduKgJMeGR7zKIrY9OCmpv0E.png",
+  motherboard: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-ZGC3nm3RAnS0v1Gpj5NVIOhFfyEA99.png",
+  workbench: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-bk0Blvw2h3YpUL2VCEW6BCTIHw3mxW.png",
+  shippingPallet: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-JkUJvSu9pc8aSJpZOUUJpVqZZPY5si.png",
+};
+
 export const lifts = [
   {
     slug: "home-lifts-in-ahmedabad-or-baroda",
@@ -281,6 +296,7 @@ export const elevatorTechnologies = [
       "Eliminates bulky rooftop motor rooms. High-torque synchronous gearless drives run cooler, silent and vibration-free, making them optimal for luxury homes, low-to-high rise residential towers, and contemporary commercial buildings in Ahmedabad and Baroda.",
     metric: "Up to 40% energy savings",
     feature: "No penthouse room needed",
+    illustration: illustrations3d.motor,
   },
   {
     id: "vvvf-drive",
@@ -290,6 +306,7 @@ export const elevatorTechnologies = [
       "Variable Voltage Variable Frequency speed regulation guarantees ultra-smooth start and stop profiles, ensuring floor leveling within ±2mm for wheelchair, stretcher and passenger safety.",
     metric: "±2 mm stop precision",
     feature: "Stepless speed transitions",
+    illustration: illustrations3d.ecoDrive,
   },
   {
     id: "ard-system",
@@ -299,6 +316,7 @@ export const elevatorTechnologies = [
       "In case of sudden power outages in local power grids across Gujarat, the intelligent ARD immediately activates to navigate the car to the nearest floor and open doors automatically for safe exit.",
     metric: "Instant backup response",
     feature: "Fail-safe battery backup",
+    illustration: illustrations3d.smartController,
   },
   {
     id: "cabin-acoustics",
@@ -308,6 +326,7 @@ export const elevatorTechnologies = [
       "High-grade nylon guide rollers, vibration-isolated car slings, and acoustic damping sandwich panels ensure whisper-quiet travel inside private villas, residential penthouses and quiet healthcare environments.",
     metric: "< 50 dB silent travel",
     feature: "Vibration-isolated sling",
+    illustration: illustrations3d.copPanel,
   },
 ] as const;
 
@@ -318,6 +337,7 @@ export const engineeringPhases = [
     description:
       "Structural engineers evaluate shaft dimensions, pit depth, overhead clearance, and electrical power parameters across residential or industrial sites in Gujarat.",
     deliverable: "Comprehensive shaft layout & civil guideline drawings",
+    illustration: illustrations3d.workbench,
   },
   {
     step: "02",
@@ -325,6 +345,7 @@ export const engineeringPhases = [
     description:
       "Cabins, counterweights, guide rails, safety gear, and microprocessor control panels are custom-fabricated strictly adhering to IS 14665 standards.",
     deliverable: "Custom cabin finish & mechanical pre-assembly",
+    illustration: illustrations3d.motor,
   },
   {
     step: "03",
@@ -332,6 +353,7 @@ export const engineeringPhases = [
     description:
       "Certified elevator technicians erect guide rails using high-precision laser alignment, hang car slings, wire safety interlocks, and commission VVVF drives.",
     deliverable: "Smooth rail calibration & electrical interlock wiring",
+    illustration: illustrations3d.toolbox,
   },
   {
     step: "04",
@@ -339,6 +361,7 @@ export const engineeringPhases = [
     description:
       "We coordinate government lift inspector validation, execute full-load emergency tests, and issue operation manuals with 24/7 AMC onboarding.",
     deliverable: "Gujarat Lift Authority certification & client handover",
+    illustration: illustrations3d.safetyShield,
   },
 ] as const;
 
@@ -348,24 +371,28 @@ export const elevatorSafetySystems = [
     description:
       "Bi-directional mechanical overspeed governor clamps onto guide rails instantaneously if travel speed exceeds safety thresholds.",
     standard: "IS 14665 certified",
+    illustration: illustrations3d.safetyGovernor,
   },
   {
     title: "Multi-Beam Infrared Light Curtains",
     description:
       "Dense non-contact infrared beams across the door frame prevent closing if passengers, pets, or objects cross the threshold.",
     standard: "154-beam protection",
+    illustration: illustrations3d.laserSurvey,
   },
   {
-    title: "Emergency Alarm & Two-Way Intercom",
+    title: "Emergency Alarm & Microprocessor Intercom",
     description:
-      "Dedicated battery-backed intercom system connects cabin occupants with building security and our emergency team 24/7.",
+      "Dedicated battery-backed digital controller connects cabin occupants with building security and our emergency response team 24/7.",
     standard: "24/7 dedicated line",
+    illustration: illustrations3d.smartController,
   },
   {
-    title: "Fireman Drive & Phase-1 Emergency Return",
+    title: "Certified IS 14665 Quality Standard",
     description:
-      "Automated integration with building fire alarm systems returns the elevator directly to the designated egress floor.",
-    standard: "NBC 2016 compliant",
+      "Automated fail-safe mechanisms, thermal motor protection, and phase-1 emergency return certified by Gujarat Lift Authority.",
+    standard: "NBC 2016 & IS 14665",
+    illustration: illustrations3d.safetyShield,
   },
 ] as const;
 

@@ -154,7 +154,7 @@ export const WarpBackground: React.FC<WarpBackgroundProps> = ({
           ))}
         </div>
       </div>
-      <div className="relative z-10 w-full h-full flex flex-col justify-between">{children}</div>
+      <div className="relative z-10 w-full h-full flex flex-col justify-center items-center">{children}</div>
     </div>
   );
 };

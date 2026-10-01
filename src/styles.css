@@ -1,18 +1,10 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
-
-@font-face {
-  font-family: Geist;
-  src: url("/__l5e/assets-v1/09f3c227-ea22-45a2-9206-19d2019f9d18/Geist-Regular.ttf")
-    format("truetype");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
+@import "lenis/dist/lenis.css";
 
 @theme inline {
-  --font-sans: Geist, sans-serif;
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
@@ -55,25 +47,41 @@
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+  }
+  html.lenis,
+  html.lenis-smooth {
+    scroll-behavior: auto !important;
   }
   body {
     margin: 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    position: relative;
     background: var(--background);
     color: var(--foreground);
-    font-family: Geist, sans-serif;
+    font-family: Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   h1,
   h2,
   h3,
   h4 {
     font-weight: 400;
-    letter-spacing: 0;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
   }
   p {
     color: var(--muted-foreground);
     font-size: 14.5px;
     line-height: 1.7;
+    text-wrap: pretty;
   }
   ::selection {
     background: var(--primary);
@@ -83,24 +91,28 @@
 
 @utility editorial-image {
   filter: none;
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 @utility section-frame {
   position: relative;
+  width: 100%;
 }
 @utility ruled-link {
   border-bottom: 1px solid var(--border);
-  transition: padding 250ms ease;
+  transition: padding 250ms ease, color 200ms ease;
   &:hover {
     padding-left: 8px;
   }
 }
 @utility hover-lift {
   transition:
-    transform 300ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 350ms cubic-bezier(0.16, 1, 0.3, 1),
     border-color 300ms ease,
-    box-shadow 300ms ease;
+    box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 300ms ease;
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: 0 14px 30px -8px rgba(39, 74, 102, 0.14);
   }
 }
 @utility pulse-indicator {
