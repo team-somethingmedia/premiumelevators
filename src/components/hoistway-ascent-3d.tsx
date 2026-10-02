@@ -242,18 +242,21 @@ export function HoistwayAscent3D({ activePhase, onPhaseChange }: HoistwayAscent3
         className="h-[240px] sm:h-[270px] lg:h-[290px] w-full cursor-grab active:cursor-grabbing touch-pan-y"
       />
 
-      <div className="border-t border-primary/15 px-4 py-2.5 bg-background flex items-center justify-between text-[12.5px]">
-        <span className="text-gray-700">Select phase:</span>
-        <div className="flex gap-1.5">
+      <div className="border-t border-primary/15 px-3 py-2.5 sm:px-4 sm:py-2.5 bg-background flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[12.5px]">
+        <div className="flex items-center justify-between sm:justify-start gap-2">
+          <span className="text-[12px] text-gray-700 font-medium">Select phase:</span>
+          <span className="text-[11.5px] text-primary sm:hidden font-medium">Phase {activePhase + 1} of 4</span>
+        </div>
+        <div className="grid grid-cols-4 gap-1.5 w-full sm:w-auto sm:flex sm:gap-1.5">
           {[0, 1, 2, 3].map((idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => onPhaseChange?.(idx)}
-              className={`h-7 min-w-7 px-2.5 rounded-md border text-[12px] transition-all cursor-pointer ${
+              className={`h-7.5 sm:h-7 px-2 sm:px-3 rounded-lg border text-[11.5px] sm:text-[12px] whitespace-nowrap text-center font-medium transition-all cursor-pointer flex items-center justify-center ${
                 activePhase === idx
-                  ? "border-primary bg-primary text-background font-medium shadow-xs"
-                  : "border-primary/20 text-primary hover:border-primary/60 hover:bg-primary/5"
+                  ? "border-primary bg-primary text-background shadow-xs ring-1 ring-primary/30"
+                  : "border-primary/20 text-primary hover:border-primary/60 hover:bg-primary/5 bg-background"
               }`}
             >
               Phase {idx + 1}

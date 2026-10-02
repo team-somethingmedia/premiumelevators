@@ -4,8 +4,9 @@ import goods from "@/assets/industrial-lift.jpg";
 import capsule from "@/assets/capsule-lift.jpg";
 import hospital from "@/assets/hospital-lift.jpg";
 import motor from "@/assets/elevator-motor.jpg";
+import founder from "@/assets/founder-portrait.jpg";
 
-export const images = { hero, home, goods, capsule, hospital, motor };
+export const images = { hero, home, goods, capsule, hospital, motor, founder };
 
 export const illustrations3d = {
   motor: "https://lftz25oez4aqbxpq.public.blob.vercel-storage.com/image-Co7Y43IXIqna0bWJp09V4VrXP1K7am.png",
@@ -449,6 +450,8 @@ export const companyJourney = [
 export const founderLeadership = {
   name: "Vikas Patel",
   role: "Founder & Engineering Director",
+  image: founder,
+  experience: "15+ Years in Vertical Mobility Engineering",
   quote:
     "An elevator is not simply a mechanical box; it is critical safety infrastructure that families, patients, and industrial workers entrust with their lives every day.",
   statement:

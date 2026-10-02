@@ -286,50 +286,77 @@ export function About() {
         id="about-leadership"
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center border-b border-primary/20 py-8 sm:py-10 lg:py-6"
       >
-        <div className="mx-auto grid w-full max-w-[1440px] items-center gap-6 px-4 sm:px-6 md:grid-cols-2 md:gap-8 md:px-10 lg:grid-cols-[1.1fr_1fr] lg:gap-12 lg:px-12 xl:px-16">
-          <div className="gsap-fade-item">
-            <h2 className="text-[clamp(22px,3.2vw,38px)] leading-[1.15] text-primary">
-              Engineering integrity & founder responsibility.
-            </h2>
-            <blockquote className="mt-3.5 rounded-xl border-l-2 border-primary bg-background/50 py-2.5 pl-3.5 text-[14px] italic leading-relaxed text-primary sm:text-[14.5px] md:text-[15.5px]">
-              "{founderLeadership.quote}"
-            </blockquote>
-            <p className="mt-3 text-[13px] leading-relaxed text-gray-700 sm:text-[13.5px] md:text-[14.5px]">
-              {founderLeadership.statement}
-            </p>
-            <div className="mt-4 flex items-center justify-between border-t border-primary/20 pt-3 sm:mt-5 sm:pt-3.5">
-              <div>
-                <div className="text-[15px] font-medium text-primary sm:text-[16px]">{founderLeadership.name}</div>
-                <div className="text-[11.5px] text-gray-700 sm:text-[12px]">
-                  {founderLeadership.role} · Premium Elevators
+        <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
+          <div className="grid items-stretch gap-6 lg:grid-cols-[360px_1fr] lg:gap-8 xl:grid-cols-[400px_1fr] xl:gap-10">
+            {/* Founder Image Showcase Card */}
+            <div className="gsap-fade-item flex flex-col justify-between overflow-hidden rounded-2xl border border-primary/25 bg-background p-3.5 shadow-xs sm:p-4">
+              <div className="relative aspect-[4/4.2] w-full overflow-hidden rounded-xl border border-primary/20 bg-primary/10 sm:aspect-[4/3.8] lg:aspect-[4/4.4]">
+                <img
+                  src={founderLeadership.image}
+                  alt={`${founderLeadership.name} - ${founderLeadership.role}`}
+                  width={600}
+                  height={700}
+                  className="editorial-image h-full w-full object-cover object-top transition-transform duration-700 ease-out hover:scale-105"
+                />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/95 via-primary/60 to-transparent p-3.5 sm:p-4 text-background">
+                  <div className="text-[16px] font-medium leading-snug sm:text-[17px]">
+                    {founderLeadership.name}
+                  </div>
+                  <div className="text-[11.5px] text-background/80 sm:text-[12px]">
+                    {founderLeadership.role}
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div className="gsap-fade-item flex flex-col justify-between rounded-2xl border border-primary/30 bg-background p-4 shadow-xs sm:p-5 md:p-6">
-            <div>
-              <div className="flex items-center justify-between border-b border-primary/20 pb-2.5 text-[13.5px] font-normal text-primary sm:pb-3 sm:text-[14.5px]">
-                <span>Core Leadership Commitments</span>
-                <span className="text-[11px] text-gray-700 sm:text-[11.5px]">IS 14665 Safety</span>
-              </div>
-              <div className="mt-3.5 space-y-2.5 sm:mt-4 sm:space-y-3">
-                {founderLeadership.commitments.map((commitment, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-2.5 border-b border-primary/15 pb-2 sm:gap-3 sm:pb-2.5 last:border-0 last:pb-0"
-                  >
-                    <span className="mt-0.5 flex h-4.5 w-4.5 shrink-0 items-center justify-center rounded-full border border-primary bg-background text-[10.5px] text-primary sm:h-5 sm:w-5 sm:text-[11px]">
-                      {i + 1}
-                    </span>
-                    <p className="text-[12.5px] leading-relaxed text-gray-700 sm:text-[13px]">{commitment}</p>
-                  </div>
-                ))}
+              <div className="mt-3 flex items-center justify-between border-t border-primary/15 pt-2.5 text-[11.5px] text-primary">
+                <span className="font-medium text-gray-700">{founderLeadership.experience}</span>
+                <span className="rounded-full border border-primary/25 bg-primary/5 px-2 py-0.5 text-[10.5px] font-medium text-primary">
+                  BIS / IS 14665 Lead
+                </span>
               </div>
             </div>
-            <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-primary/20 pt-2.5 sm:mt-5 sm:pt-3">
-              <ArrowLink to="/contact">Speak with engineering director</ArrowLink>
-              <ArrowLink to="/lifts">Explore lift models</ArrowLink>
+
+            {/* Leadership Statement & Core Commitments */}
+            <div className="gsap-fade-item flex flex-col justify-between rounded-2xl border border-primary/25 bg-background p-4 shadow-xs sm:p-5 md:p-6">
+              <div>
+                <div className="flex items-center justify-between border-b border-primary/20 pb-2.5">
+                  <h2 className="text-[clamp(20px,2.6vw,32px)] leading-[1.15] text-primary font-normal">
+                    Engineering integrity & founder responsibility.
+                  </h2>
+                </div>
+
+                <blockquote className="mt-3 rounded-xl border-l-2 border-primary bg-primary/[0.03] py-2.5 pl-3.5 text-[13px] italic leading-relaxed text-primary sm:text-[14px]">
+                  "{founderLeadership.quote}"
+                </blockquote>
+
+                <p className="mt-2.5 text-[12.5px] leading-relaxed text-gray-700 sm:text-[13px]">
+                  {founderLeadership.statement}
+                </p>
+
+                <div className="mt-3.5 border-t border-primary/15 pt-3">
+                  <div className="mb-2 text-[12px] font-medium uppercase tracking-wider text-primary">
+                    Core Leadership Commitments
+                  </div>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    {founderLeadership.commitments.map((commitment, i) => (
+                      <div
+                        key={i}
+                        className="flex items-start gap-2 rounded-lg border border-primary/10 bg-primary/[0.02] p-2 text-[12px] text-gray-700 sm:text-[12.5px]"
+                      >
+                        <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-primary bg-background text-[10px] text-primary font-medium">
+                          {i + 1}
+                        </span>
+                        <span className="leading-snug">{commitment}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-primary/20 pt-2.5 sm:pt-3">
+                <ArrowLink to="/contact">Speak with engineering director</ArrowLink>
+                <ArrowLink to="/lifts">Explore lift models</ArrowLink>
+              </div>
             </div>
           </div>
         </div>

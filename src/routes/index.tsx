@@ -291,20 +291,75 @@ export function Home() {
       {/* 5. Elevator Engineering & Drive Technology in 100vh Format */}
       <section
         id="drive-tech"
-        className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
+        className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-4 sm:py-6 lg:py-4"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-7">
-            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-              Elevator engineering & drive technology.
-            </h2>
-            <ArrowLink to="/lifts" className="shrink-0">
-              View lift specifications
+          {/* Section Header with helper badge */}
+          <div className="gsap-section-header mb-3 flex flex-col justify-between gap-2 sm:mb-4 sm:flex-row sm:items-center">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/5 px-2.5 py-0.5 text-[11px] font-medium text-primary">
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+                  Interactive Component Inspector
+                </span>
+                <span className="hidden text-[12px] text-gray-700 sm:inline">
+                  Select any drive system below to inspect live specifications
+                </span>
+              </div>
+              <h2 className="mt-1 text-[clamp(20px,2.8vw,34px)] leading-[1.15] text-primary">
+                Elevator engineering & drive technology.
+              </h2>
+            </div>
+            <ArrowLink to="/lifts" className="shrink-0 text-[12.5px] sm:text-[13px]">
+              View all lift specifications
             </ArrowLink>
           </div>
 
-          <div className="gsap-fade-item grid items-stretch gap-6 lg:grid-cols-[1.1fr_1.3fr] lg:gap-10">
-            <div className="flex flex-col justify-center space-y-2.5">
+          {/* Mobile / Tablet Horizontal Tab Strip (Directly above showcase so changes are immediately visible) */}
+          <div className="mb-3 grid grid-cols-2 gap-1.5 sm:grid-cols-4 lg:hidden">
+            {elevatorTechnologies.map((tech, idx) => {
+              const isActive = selectedTech === idx;
+              return (
+                <button
+                  key={tech.id}
+                  type="button"
+                  onClick={() => setSelectedTech(idx)}
+                  className={`flex cursor-pointer items-center gap-2 rounded-xl border p-2 text-left transition-all ${
+                    isActive
+                      ? "border-primary bg-primary text-background shadow-xs ring-1 ring-primary/30"
+                      : "border-primary/20 bg-background text-primary hover:border-primary/50 hover:bg-primary/5"
+                  }`}
+                >
+                  <img
+                    src={tech.illustration}
+                    alt={tech.title}
+                    width={32}
+                    height={32}
+                    className={`h-7 w-7 shrink-0 object-contain rounded-md p-0.5 ${
+                      isActive ? "bg-background/20" : "bg-primary/5"
+                    }`}
+                  />
+                  <div className="min-w-0 flex-1">
+                    <span className="block truncate text-[11px] font-medium">
+                      0{idx + 1}. {tech.title.split(" ")[0]} {tech.title.split(" ")[1]}
+                    </span>
+                    <span
+                      className={`block truncate text-[10px] ${
+                        isActive ? "text-background/80" : "text-gray-700"
+                      }`}
+                    >
+                      {tech.metric}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Desktop & Tablet Main Content Grid */}
+          <div className="gsap-fade-item grid items-stretch gap-4 lg:grid-cols-[380px_1fr] lg:gap-6 xl:grid-cols-[420px_1fr]">
+            {/* Desktop Left Column: 4 Interactive Selectable Cards with Mini 3D Illustrations */}
+            <div className="hidden flex-col justify-between space-y-2 lg:flex">
               {elevatorTechnologies.map((tech, idx) => {
                 const isActive = selectedTech === idx;
                 return (
@@ -312,89 +367,133 @@ export function Home() {
                     key={tech.id}
                     type="button"
                     onClick={() => setSelectedTech(idx)}
-                    className={`group w-full cursor-pointer rounded-xl border p-3.5 text-left transition-all duration-300 ${
+                    onMouseEnter={() => setSelectedTech(idx)}
+                    className={`group relative flex w-full cursor-pointer items-center gap-3.5 rounded-xl border p-3 text-left transition-all duration-300 ${
                       isActive
-                        ? "border-primary bg-primary/5 shadow-xs ring-1 ring-primary"
+                        ? "border-primary bg-primary/[0.06] shadow-xs ring-1 ring-primary"
                         : "border-primary/20 bg-background hover:border-primary/60 hover:bg-primary/[0.02]"
                     }`}
                   >
-                    <div className="flex items-center justify-between text-primary">
-                      <span className="text-[15px] font-normal text-primary">{tech.title}</span>
-                      <span className="text-[12px] font-medium text-primary">
-                        {tech.metric}
-                      </span>
+                    {/* Mini Component Thumbnail */}
+                    <div
+                      className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border p-1 transition-colors ${
+                        isActive
+                          ? "border-primary/40 bg-primary/10"
+                          : "border-primary/15 bg-primary/5 group-hover:border-primary/30"
+                      }`}
+                    >
+                      <img
+                        src={tech.illustration}
+                        alt={tech.title}
+                        width={48}
+                        height={48}
+                        className="h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[11px] font-semibold tracking-wider text-primary uppercase">
+                          0{idx + 1} // TECH SPEC
+                        </span>
+                        {isActive && (
+                          <span className="inline-flex items-center gap-1 rounded-full bg-primary px-1.5 py-0.2 text-[9.5px] font-medium text-background">
+                            Active
+                          </span>
+                        )}
+                      </div>
+                      <div className="truncate text-[13.5px] font-medium text-primary">
+                        {tech.title}
+                      </div>
+                      <div className="truncate text-[11.5px] text-gray-700">
+                        {tech.metric} · {tech.feature}
+                      </div>
                     </div>
                   </button>
                 );
               })}
             </div>
 
-            {/* Interactive Workbench Preview with 3D Component Illustration & Efficiency Graph */}
-            <div className="flex flex-col justify-between rounded-2xl border border-primary/25 bg-background p-5 shadow-xs transition-all duration-300 md:p-6">
+            {/* Right Column: Live Interactive Component Inspector Card */}
+            <div className="flex flex-col justify-between rounded-2xl border border-primary/25 bg-background p-4 shadow-xs transition-all duration-300 sm:p-5">
               <div>
-                <div className="flex items-center justify-between border-b border-primary/15 pb-3 text-[13px] text-primary">
-                  <span className="font-medium text-primary">
-                    Component Details
-                  </span>
-                  <span className="text-[12px] text-gray-700">
-                    {elevatorTechnologies[selectedTech].feature}
+                {/* Top Inspection Status Bar */}
+                <div className="flex items-center justify-between border-b border-primary/15 pb-2.5 text-[12.5px]">
+                  <div className="flex items-center gap-2 text-primary font-medium">
+                    <span className="flex h-2 w-2 rounded-full bg-primary animate-pulse" />
+                    <span>Selected: 0{selectedTech + 1} — {elevatorTechnologies[selectedTech].feature}</span>
+                  </div>
+                  <span className="rounded-full border border-primary/20 bg-primary/5 px-2 py-0.5 text-[11px] font-medium text-primary">
+                    IS 14665 Standard
                   </span>
                 </div>
 
-                <div className="mt-4 flex flex-col items-start gap-5 sm:flex-row">
-                  <div className="flex h-28 w-full shrink-0 items-center justify-center overflow-hidden rounded-xl border border-primary/25 bg-primary/5 p-2 sm:w-36">
+                {/* Split Component Display: 3D Illustration + Descriptive Overview */}
+                <div className="mt-3 flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
+                  <div className="relative flex aspect-square h-24 w-24 sm:h-28 sm:w-28 lg:h-32 lg:w-32 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-primary/25 bg-primary/5 p-2 shadow-xs">
                     <img
+                      key={elevatorTechnologies[selectedTech].id}
                       src={elevatorTechnologies[selectedTech].illustration}
                       alt={elevatorTechnologies[selectedTech].title}
-                      width={300}
-                      height={300}
-                      className="h-full w-full object-contain transition-transform duration-500 ease-out hover:scale-105"
+                      width={200}
+                      height={200}
+                      className="h-full w-full object-contain transition-transform duration-500 ease-out hover:scale-110"
                     />
+                    <span className="absolute bottom-1 right-1 rounded-sm bg-background/80 px-1 py-0.2 text-[9px] text-primary font-medium">
+                      3D Asset
+                    </span>
                   </div>
-                  <div>
-                    <h3 className="text-[clamp(18px,2vw,22px)] font-normal leading-[1.2] text-primary">
+
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[11px] font-semibold uppercase tracking-wider text-gray-700">
+                      Engineering Architecture
+                    </div>
+                    <h3 className="text-[clamp(16px,1.8vw,20px)] font-normal leading-[1.2] text-primary">
                       {elevatorTechnologies[selectedTech].title}
                     </h3>
-                    <div className="mt-1 text-[13px] font-medium text-primary">
+                    <div className="mt-0.5 text-[12.5px] font-medium text-primary">
                       {elevatorTechnologies[selectedTech].tagline}
                     </div>
-                    <p className="mt-2 text-[13px] leading-relaxed text-gray-700">
+                    <p className="mt-1.5 text-[12px] leading-relaxed text-gray-700 line-clamp-2 sm:line-clamp-3">
                       {elevatorTechnologies[selectedTech].description}
                     </p>
                   </div>
                 </div>
 
-                {/* Energy Efficiency & Acoustic Performance Bar Graph */}
-                <div className="mt-4 border-t border-primary/20 pt-3">
-                  <div className="mb-2 text-[12.5px] font-medium text-primary">
-                    Efficiency & Acoustic Benchmarks
+                {/* Live Engineering Benchmarks */}
+                <div className="mt-3 border-t border-primary/15 pt-2.5">
+                  <div className="mb-2 flex items-center justify-between text-[11.5px] font-medium text-primary">
+                    <span>Performance Benchmarks</span>
+                    <span className="text-gray-700">Output: {elevatorTechnologies[selectedTech].metric}</span>
                   </div>
-                  <div className="space-y-2">
-                    <div>
-                      <div className="mb-1 flex justify-between text-[11.5px] text-gray-700">
-                        <span>PMSM Gearless Traction Energy Efficiency</span>
-                        <span className="font-medium text-primary">70% vs Geared</span>
+                  <div className="grid gap-2 sm:grid-cols-2">
+                    <div className="rounded-lg border border-primary/15 bg-primary/[0.02] p-2">
+                      <div className="mb-1 flex justify-between text-[11px] text-gray-700">
+                        <span>PMSM Power Efficiency</span>
+                        <span className="font-semibold text-primary">70% vs Geared</span>
                       </div>
                       <div className="h-1.5 w-full overflow-hidden rounded-full bg-primary/15">
-                        <div className="h-full w-[70%] rounded-full bg-primary" />
+                        <div className="h-full w-[70%] rounded-full bg-primary transition-all duration-700" />
                       </div>
                     </div>
-                    <div>
-                      <div className="mb-1 flex justify-between text-[11.5px] text-gray-700">
-                        <span>Acoustic Whisper Rating (Cabin In-Flight)</span>
-                        <span className="font-medium text-primary">&lt; 45 dB</span>
+
+                    <div className="rounded-lg border border-primary/15 bg-primary/[0.02] p-2">
+                      <div className="mb-1 flex justify-between text-[11px] text-gray-700">
+                        <span>Acoustic Damping</span>
+                        <span className="font-semibold text-primary">&lt; 45 dB Whisper</span>
                       </div>
                       <div className="h-1.5 w-full overflow-hidden rounded-full bg-primary/15">
-                        <div className="h-full w-[88%] rounded-full bg-primary" />
+                        <div className="h-full w-[88%] rounded-full bg-primary transition-all duration-700" />
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-4 border-t border-primary/20 pt-3">
-                <div className="text-[12.5px] text-primary">
-                  Performance: <span className="font-medium text-gray-700">{elevatorTechnologies[selectedTech].metric}</span>
+              {/* Action Bar Footer */}
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-primary/20 pt-2.5 text-[12px]">
+                <div className="text-gray-700">
+                  Feature: <span className="font-medium text-primary">{elevatorTechnologies[selectedTech].feature}</span>
                 </div>
                 <ArrowLink to="/contact">Consult on this specification</ArrowLink>
               </div>
