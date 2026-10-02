@@ -46,10 +46,12 @@ function LiftDetail() {
     return cleanup;
   }, [lift.slug]);
 
+  const otherLifts = lifts.filter((x) => x.slug !== lift.slug).slice(0, 3);
+
   return (
     <main ref={containerRef}>
       {/* 1. Lift Detail Hero */}
-      <section className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-4 sm:py-6 lg:py-6">
+      <section className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center border-b border-primary/20 py-8 sm:py-10 lg:py-6">
         <div className="mx-auto grid w-full max-w-[1440px] items-center gap-6 px-4 sm:px-6 md:grid-cols-2 md:gap-10 md:px-10 lg:gap-14 lg:px-12 xl:px-16">
           <div>
             <Link
@@ -58,10 +60,10 @@ function LiftDetail() {
             >
               ← All lifts
             </Link>
-            <h1 className="gsap-hero-title text-[clamp(28px,3.8vw,48px)] font-normal leading-[1.12] text-primary">
+            <h1 className="gsap-hero-title text-[clamp(26px,3.8vw,48px)] font-normal leading-[1.12] text-primary">
               {lift.name} in Ahmedabad & Baroda.
             </h1>
-            <p className="gsap-hero-text mt-3.5 max-w-[540px] text-[14px] leading-relaxed text-gray-700 md:text-[15px]">
+            <p className="gsap-hero-text mt-3.5 max-w-[540px] text-[13.5px] leading-relaxed text-gray-700 sm:text-[14px] md:text-[15px]">
               {lift.description}
             </p>
 
@@ -88,7 +90,7 @@ function LiftDetail() {
               </div>
             </div>
           </div>
-          <div className="gsap-hero-media flex aspect-[16/10] sm:aspect-[4/3] lg:aspect-[16/10] max-h-[380px] lg:max-h-[420px] w-full items-center justify-center overflow-hidden rounded-2xl border border-primary/25 bg-primary/10 shadow-xs">
+          <div className="gsap-hero-media flex aspect-[16/10] max-h-[280px] w-full items-center justify-center overflow-hidden rounded-2xl border border-primary/25 bg-primary/10 shadow-xs sm:aspect-[4/3] sm:max-h-[340px] lg:aspect-[16/10] lg:max-h-[420px]">
             <img
               src={lift.image}
               alt={`${lift.name} installation example in Ahmedabad and Baroda`}
@@ -100,58 +102,131 @@ function LiftDetail() {
         </div>
       </section>
 
-      {/* 2. Explore Other Lifts */}
-      <section className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden py-4 sm:py-6 lg:py-6">
+      {/* 2. Engineering Architecture & Technical Reliability Matrix */}
+      <section className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center border-b border-primary/20 py-8 sm:py-10 lg:py-6">
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-4 sm:mb-6 flex flex-col justify-between gap-1 sm:flex-row sm:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Explore other lifts for Gujarat properties.
-              </h2>
-              <p className="mt-1 max-w-[620px] text-[14px] leading-relaxed text-gray-700">
-                Custom-engineered vertical transit solutions for bungalows, hospitals, corporate towers and plants.
-              </p>
-            </div>
-            <ArrowLink to="/lifts" className="shrink-0">
-              View all lift categories
+          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Engineering architecture & reliability.
+            </h2>
+            <ArrowLink to="/contact" className="shrink-0">
+              Request shaft blueprints
             </ArrowLink>
           </div>
-          <div className="gsap-card-grid grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {lifts
-              .filter((x) => x.slug !== lift.slug)
-              .slice(0, 3)
-              .map((x) => (
-                <Link
-                  key={x.slug}
-                  to="/lifts/$slug"
-                  params={{ slug: x.slug }}
-                  className="gsap-card group flex flex-col justify-between rounded-2xl border border-primary/25 bg-background p-4 shadow-xs transition-all duration-300 hover:border-primary hover-lift"
-                >
-                  <div>
-                    <div className="relative aspect-[16/9] overflow-hidden rounded-xl border border-primary/15 bg-primary/10 max-h-[160px]">
-                      <img
-                        src={x.image}
-                        alt={`${x.name} in Ahmedabad & Baroda`}
-                        width={640}
-                        height={400}
-                        className="editorial-image h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="mt-3 flex items-center justify-between border-b border-primary/20 pb-2 text-primary">
-                      <span className="text-[17px] font-normal text-primary">{x.name}</span>
-                      <HugeiconsIcon
-                        icon={ArrowUpRight01Icon}
-                        size={18}
-                        className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                      />
-                    </div>
-                    <p className="mt-1.5 text-[12.5px] text-gray-700 line-clamp-2">{x.use}</p>
+
+          <div className="gsap-card-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="gsap-card flex flex-col justify-between rounded-2xl border border-primary/25 bg-background p-5 shadow-xs">
+              <div>
+                <div className="text-[17px] font-normal text-primary">Permanent Magnet Drive</div>
+                <div className="mt-3 space-y-2 text-[13px] text-gray-700">
+                  <div className="flex justify-between border-b border-primary/10 pb-1.5">
+                    <span>Motor Architecture</span>
+                    <span className="font-medium text-primary">Gearless Synchronous</span>
                   </div>
-                  <div className="mt-3 border-t border-primary/15 pt-2 text-[12px] font-medium text-primary">
-                    View Specifications →
+                  <div className="flex justify-between border-b border-primary/10 pb-1.5">
+                    <span>Power Optimization</span>
+                    <span className="font-medium text-primary">Up to 70% reduction</span>
                   </div>
-                </Link>
-              ))}
+                  <div className="flex justify-between">
+                    <span>Headroom Requirement</span>
+                    <span className="font-medium text-primary">Machine-Room-Less</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 border-t border-primary/15 pt-2 text-[12px] text-primary">
+                IS 14665 Compliant
+              </div>
+            </div>
+
+            <div className="gsap-card flex flex-col justify-between rounded-2xl border border-primary/25 bg-background p-5 shadow-xs">
+              <div>
+                <div className="text-[17px] font-normal text-primary">Ride Precision & Acoustics</div>
+                <div className="mt-3 space-y-2 text-[13px] text-gray-700">
+                  <div className="flex justify-between border-b border-primary/10 pb-1.5">
+                    <span>Floor Leveling</span>
+                    <span className="font-medium text-primary">±2 mm Micro-leveling</span>
+                  </div>
+                  <div className="flex justify-between border-b border-primary/10 pb-1.5">
+                    <span>Acoustic In-Flight</span>
+                    <span className="font-medium text-primary">&lt; 45 dB whisper</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Drive Control</span>
+                    <span className="font-medium text-primary">Regenerative VVVF</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 border-t border-primary/15 pt-2 text-[12px] text-primary">
+                Microprocessor Dispatch
+              </div>
+            </div>
+
+            <div className="gsap-card flex flex-col justify-between rounded-2xl border border-primary/25 bg-background p-5 shadow-xs sm:col-span-2 lg:col-span-1">
+              <div>
+                <div className="text-[17px] font-normal text-primary">Fail-Safe Emergency Systems</div>
+                <div className="mt-3 space-y-2 text-[13px] text-gray-700">
+                  <div className="flex justify-between border-b border-primary/10 pb-1.5">
+                    <span>Power Outage</span>
+                    <span className="font-medium text-primary">Automatic Rescue (ARD)</span>
+                  </div>
+                  <div className="flex justify-between border-b border-primary/10 pb-1.5">
+                    <span>Door Safety</span>
+                    <span className="font-medium text-primary">Multi-beam IR curtain</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Speed Protection</span>
+                    <span className="font-medium text-primary">Bi-directional Governor</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 border-t border-primary/15 pt-2 text-[12px] text-primary">
+                24/7 Field SLA
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Suggestions for More Lifts — Clean & Minimal (No eyebrows, No descriptions) */}
+      <section className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center border-b border-primary/20 py-8 sm:py-10 lg:py-6">
+        <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
+          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Suggestions for more lifts.
+            </h2>
+            <ArrowLink to="/lifts" className="shrink-0">
+              View all lifts
+            </ArrowLink>
+          </div>
+          <div className="gsap-card-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {otherLifts.map((x) => (
+              <Link
+                key={x.slug}
+                to="/lifts/$slug"
+                params={{ slug: x.slug }}
+                className="gsap-card group flex flex-col justify-between rounded-2xl border border-primary/25 bg-background p-4 shadow-xs transition-all duration-300 hover:border-primary hover-lift"
+              >
+                <div>
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-primary/15 bg-primary/10">
+                    <img
+                      src={x.image}
+                      alt={x.name}
+                      width={640}
+                      height={400}
+                      className="editorial-image h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="mt-4 flex items-center justify-between border-t border-primary/20 pt-3 text-primary">
+                    <span className="text-[18px] font-normal text-primary">{x.name}</span>
+                    <HugeiconsIcon
+                      icon={ArrowUpRight01Icon}
+                      size={18}
+                      className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
+                    />
+                  </div>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

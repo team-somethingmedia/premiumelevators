@@ -17,7 +17,6 @@ import {
   address,
   hoAddress,
   authorityBacklinks,
-  popularSearchQueries,
 } from "@/lib/site-data";
 
 export function ArrowLink({
@@ -176,20 +175,18 @@ export function Footer() {
   return (
     <footer className="flex min-h-[100svh] flex-col justify-between border-t border-primary/20 bg-background px-4 py-8 sm:px-6 sm:py-10 md:px-10 lg:px-12 lg:py-12 xl:px-16">
       <div className="mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-between gap-8 sm:gap-10">
-        {/* Top Call to Action Header Row */}
-        <div className="flex flex-col justify-between gap-6 border-b border-primary/20 pb-6 sm:flex-row sm:items-end sm:pb-8">
-          <div>
-            <div className="text-[12px] font-medium uppercase tracking-wider text-primary">
-              Direct Engineering Consultation
-            </div>
-            <h2 className="mt-2 text-[clamp(24px,3.2vw,40px)] font-normal leading-[1.15] text-primary">
-              Plan your lift shaft with Gujarat's leading engineers.
-            </h2>
+        {/* Top Call to Action Header Row — Justified Center */}
+        <div className="flex flex-col items-center justify-center text-center gap-5 border-b border-primary/20 pb-8 sm:pb-10">
+          <div className="text-[12px] font-medium uppercase tracking-wider text-primary">
+            Direct Engineering Consultation
           </div>
-          <div className="flex shrink-0 flex-wrap items-center gap-4">
+          <h2 className="max-w-[760px] text-[clamp(24px,3.2vw,40px)] font-normal leading-[1.15] text-primary">
+            Plan your lift shaft with Gujarat's leading engineers.
+          </h2>
+          <div className="mt-1 flex flex-wrap justify-center items-center gap-4">
             <Button
               asChild
-              className="h-11 rounded-full bg-primary px-7 text-[13.5px] font-normal text-primary-foreground shadow-xs transition-all duration-300 hover:bg-primary/90 hover:shadow-md active:scale-[0.98]"
+              className="h-11 rounded-full bg-primary px-8 text-[13.5px] font-normal text-primary-foreground shadow-xs transition-all duration-300 hover:bg-primary/90 hover:shadow-md active:scale-[0.98]"
             >
               <Link to="/contact">
                 Request a site survey <HugeiconsIcon icon={ArrowUpRight01Icon} size={16} />
@@ -305,25 +302,20 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Popular Search Keywords Index */}
-        <div className="border-t border-primary/20 pt-4 sm:pt-5">
-          <div className="mb-2 text-[11.5px] font-medium uppercase tracking-wider text-primary">
-            Popular Elevator Searches in Ahmedabad & Baroda
-          </div>
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-[12px] text-gray-700">
-            {popularSearchQueries.map((q) => (
-              <span key={q} className="border-b border-primary/15 pb-0.5">
-                {q}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom Bar: Copyright & Location stamps */}
-        <div className="flex flex-col justify-between gap-3 border-t border-primary/20 pt-4 text-[12px] text-gray-700 sm:flex-row sm:items-center">
+        {/* Bottom Bar: Copyright, Location stamps & Handcrafted credit */}
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-primary/20 pt-5 text-center text-[12px] text-gray-700 sm:flex-row sm:text-left">
           <span>© {new Date().getFullYear()} Premium Elevators. All rights reserved. IS 14665 & NBC 2016 Compliant.</span>
+          <span>Operational across Ahmedabad · Baroda · Surat · Rajkot · Gujarat</span>
           <div>
-            <span>Operational across Ahmedabad · Baroda · Surat · Rajkot · Gujarat</span>
+            Handcrafted by ❤️ with{" "}
+            <a
+              href="https://somethingmedia.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary font-medium underline underline-offset-4 hover:opacity-80"
+            >
+              somethingmedia.in
+            </a>
           </div>
         </div>
       </div>

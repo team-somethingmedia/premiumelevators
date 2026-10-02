@@ -103,70 +103,12 @@ export function Home() {
 
   return (
     <main ref={mainRef} className="relative overflow-hidden">
-      {/* 1. Hero Section with 3D Warp Shaft Background & Interactive Logo in Strict 100vh Format */}
+      {/* 1. Hero Section — Blank 100vh Space */}
       <section
         id="hero-level"
         className="section-frame relative flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 bg-background"
       >
-        <WarpBackground
-          perspective={110}
-          beamSize={4}
-          beamsPerSide={5}
-          beamDuration={3.2}
-          gridColor="rgba(39, 74, 102, 0.16)"
-          className="flex h-full min-h-[calc(100svh-86px)] w-full flex-col justify-center"
-        >
-          {/* Foreground Hero Content Grid — exact same container alignment as Header */}
-          <div className="relative z-10 mx-auto grid w-full max-w-[1440px] items-center gap-8 px-4 py-8 sm:px-6 sm:py-8 md:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:px-12 lg:py-6 xl:px-16">
-            <div className="flex flex-col justify-center">
-              <h1 className="gsap-hero-title text-[clamp(32px,3.8vw,52px)] font-normal leading-[1.14] tracking-tight text-primary">
-                Best Home Lifts & Elevators in Ahmedabad & Baroda.
-              </h1>
-              <p className="gsap-hero-text mt-5 max-w-[580px] text-[15px] leading-[1.65] text-gray-700 md:text-[16.5px]">
-                Engineering advanced vertical mobility for private residences, commercial towers,
-                multi-specialty hospitals and industrial manufacturing plants across Gujarat with
-                silent MRL technology, BIS safety compliance and local maintenance teams.
-              </p>
-              
-              <div className="mt-7 flex flex-wrap items-center gap-6">
-                <div className="gsap-hero-action">
-                  <ArrowLink to="/lifts">Explore all lifts</ArrowLink>
-                </div>
-                <div className="gsap-hero-action">
-                  <ArrowLink to="/contact">Discuss your project</ArrowLink>
-                </div>
-              </div>
-
-              {/* Clean Inline Key Metrics */}
-              <div className="gsap-fade-item mt-8 flex flex-wrap items-center gap-6 border-t border-primary/20 pt-6 sm:gap-8 md:gap-10">
-                <div>
-                  <div className="text-[20px] font-normal tracking-tight text-primary sm:text-[22px]">99.8%</div>
-                  <div className="text-[12px] text-gray-700">System Uptime</div>
-                </div>
-                <div className="hidden h-7 w-[1px] bg-primary/20 sm:block" />
-                <div>
-                  <div className="text-[20px] font-normal tracking-tight text-primary sm:text-[22px]">IS 14665</div>
-                  <div className="text-[12px] text-gray-700">BIS Certified</div>
-                </div>
-                <div className="hidden h-7 w-[1px] bg-primary/20 sm:block" />
-                <div>
-                  <div className="text-[20px] font-normal tracking-tight text-primary sm:text-[22px]">±2 mm</div>
-                  <div className="text-[12px] text-gray-700">Stop Precision</div>
-                </div>
-                <div className="hidden h-7 w-[1px] bg-primary/20 sm:block" />
-                <div>
-                  <div className="text-[20px] font-normal tracking-tight text-primary sm:text-[22px]">24/7</div>
-                  <div className="text-[12px] text-gray-700">Local Response</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Custom Interactive 3D Brand Mark */}
-            <div className="gsap-hero-media relative flex w-full items-center justify-center lg:justify-end">
-              <InteractiveHeroLogo />
-            </div>
-          </div>
-        </WarpBackground>
+        <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16" />
       </section>
 
       {/* 2. Lift Collection in 100vh Format */}

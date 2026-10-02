@@ -129,14 +129,16 @@ function Contact() {
             rows={2}
             className="w-full resize-none rounded-xl border border-primary/25 bg-background/80 px-3.5 py-2.5 text-[13.5px] text-primary outline-none transition-all duration-300 placeholder:text-gray-700/80 focus:border-primary focus:ring-1 focus:ring-primary/20 focus:bg-background"
           />
-          <Button
-            type="submit"
-            className="mt-1 h-10 sm:h-11 w-fit rounded-full bg-primary px-7 text-[13px] font-normal text-primary-foreground shadow-none transition-all duration-300 hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Send project enquiry <HugeiconsIcon icon={ArrowUpRight01Icon} size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ml-1" />
-          </Button>
+          <div className="mt-1 flex justify-center">
+            <Button
+              type="submit"
+              className="h-11 sm:h-12 w-full justify-center rounded-xl bg-primary px-7 text-[13.5px] sm:text-[14px] font-normal text-primary-foreground shadow-xs transition-all duration-300 hover:bg-primary/90 active:scale-[0.99] cursor-pointer"
+            >
+              Send project enquiry <HugeiconsIcon icon={ArrowUpRight01Icon} size={16} className="ml-1.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Button>
+          </div>
           {sent && (
-            <p role="status" className="mt-1 text-[12.5px] text-gray-700">
+            <p role="status" className="mt-1 text-center text-[12.5px] text-gray-700">
               Your email client has opened with your structured enquiry.
             </p>
           )}

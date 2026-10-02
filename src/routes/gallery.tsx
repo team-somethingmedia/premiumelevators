@@ -1,6 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useRef, useEffect } from "react";
-import { ArrowLink } from "@/components/site-shell";
+import { Button } from "@/components/ui/button";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons";
 import { images, pageHead } from "@/lib/site-data";
 import { initPageAnimations } from "@/lib/gsap-animations";
 
@@ -74,9 +76,15 @@ function Gallery() {
             </figure>
           ))}
         </div>
-        <div className="gsap-fade-item mt-6 flex justify-between items-center border-t border-primary/15 pt-4">
-          <span className="text-[13px] text-gray-700">Custom architectural cab finishes & glass towers available</span>
-          <ArrowLink to="/contact">Discuss custom elevator design</ArrowLink>
+        <div className="gsap-fade-item mt-8 flex justify-center items-center border-t border-primary/15 pt-6">
+          <Button
+            asChild
+            className="h-11 rounded-full bg-primary px-8 text-[13.5px] font-normal text-primary-foreground shadow-xs transition-all duration-300 hover:bg-primary/90 hover:shadow-md active:scale-[0.98]"
+          >
+            <Link to="/contact">
+              Discuss custom elevator design <HugeiconsIcon icon={ArrowUpRight01Icon} size={16} className="ml-1" />
+            </Link>
+          </Button>
         </div>
       </div>
     </main>
