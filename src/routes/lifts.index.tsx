@@ -31,15 +31,10 @@ function Lifts() {
       {/* 1. Primary Architectural & Commercial Lifts */}
       <section className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-4 sm:py-6 lg:py-6">
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="mb-3 sm:mb-4 flex flex-col justify-between gap-1 sm:flex-row sm:items-end">
-            <div>
-              <h1 className="gsap-hero-title text-[clamp(24px,3.2vw,38px)] font-normal leading-[1.12] text-primary">
-                Lifts for Ahmedabad & Baroda.
-              </h1>
-              <p className="mt-1 text-[13.5px] text-gray-700">
-                Primary architectural, commercial and healthcare vertical mobility categories.
-              </p>
-            </div>
+          <div className="mb-3 sm:mb-4 flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
+            <h1 className="gsap-hero-title text-[clamp(24px,3.2vw,38px)] font-normal leading-[1.12] text-primary">
+              Lifts for Ahmedabad & Baroda.
+            </h1>
             <span className="text-[12.5px] text-gray-700">6 Core Systems</span>
           </div>
 
@@ -93,15 +88,10 @@ function Lifts() {
       {/* 2. Specialized & Retrofit Transit Systems */}
       <section className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden py-4 sm:py-6 lg:py-6">
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="mb-4 sm:mb-5 flex flex-col justify-between gap-1 sm:flex-row sm:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] font-normal leading-[1.12] text-primary">
-                Specialized & retrofit lift systems.
-              </h2>
-              <p className="mt-1 text-[13.5px] text-gray-700">
-                Self-supporting steel towers, kitchen dumbwaiters and heavy automobile parking elevators.
-              </p>
-            </div>
+          <div className="mb-4 sm:mb-5 flex flex-col justify-between gap-1 sm:flex-row sm:items-center">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] font-normal leading-[1.12] text-primary">
+              Specialized & retrofit lift systems.
+            </h2>
             <span className="text-[12.5px] text-gray-700">3 Specialized Systems</span>
           </div>
 

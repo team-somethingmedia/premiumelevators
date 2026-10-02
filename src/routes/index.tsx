@@ -175,16 +175,10 @@ export function Home() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 md:mb-8 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Lifts for every architectural space.
-              </h2>
-              <p className="mt-2 max-w-[580px] text-[14.5px] leading-relaxed text-gray-700">
-                Custom-engineered vertical mobility solutions designed for residential bungalows,
-                commercial complexes, healthcare facilities, and manufacturing plants across Gujarat.
-              </p>
-            </div>
+          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-8">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Lifts for every architectural space.
+            </h2>
             <ArrowLink to="/lifts" className="shrink-0">
               View all 6 lift categories
             </ArrowLink>
@@ -243,16 +237,10 @@ export function Home() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-5 flex flex-col justify-between gap-4 md:mb-6 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Elevator technical specifications matrix.
-              </h2>
-              <p className="mt-1.5 max-w-[580px] text-[14.5px] leading-relaxed text-gray-700">
-                Architectural dimension guidelines and mechanical parameters for planning lift shafts
-                in Ahmedabad and Baroda projects.
-              </p>
-            </div>
+          <div className="gsap-section-header mb-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-6">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Elevator technical specifications matrix.
+            </h2>
             <ArrowLink to="/contact" className="shrink-0">
               Request custom shaft drawings
             </ArrowLink>
@@ -294,17 +282,10 @@ export function Home() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 md:mb-7 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Interactive 3D elevator shaft & cabin simulator.
-              </h2>
-              <p className="mt-1.5 max-w-[580px] text-[14.5px] leading-relaxed text-gray-700">
-                Experience real-time MRL gearless traction kinematics. Drag to orbit the 3D hoistway
-                and click call buttons to dispatch the elevator cabin between 5 architectural
-                levels.
-              </p>
-            </div>
+          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-7">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Interactive 3D elevator shaft & cabin simulator.
+            </h2>
             <ArrowLink to="/contact" className="shrink-0">
               Request BIM / 3D CAD models
             </ArrowLink>
@@ -371,16 +352,10 @@ export function Home() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 md:mb-7 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Elevator engineering & drive technology.
-              </h2>
-              <p className="mt-1.5 max-w-[580px] text-[14.5px] leading-relaxed text-gray-700">
-                Precision engineering that combines permanent magnet synchronous gearless traction,
-                micro-smooth VVVF leveling, and autonomous battery rescue.
-              </p>
-            </div>
+          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-7">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Elevator engineering & drive technology.
+            </h2>
             <ArrowLink to="/lifts" className="shrink-0">
               View lift specifications
             </ArrowLink>
@@ -492,16 +467,10 @@ export function Home() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 md:mb-8 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Turnkey engineering & installation workflow.
-              </h2>
-              <p className="mt-1.5 max-w-[580px] text-[14.5px] leading-relaxed text-gray-700">
-                From structural shaft survey in Ahmedabad and Baroda to certified mechanical
-                erection, statutory inspection, and lifetime preventive maintenance.
-              </p>
-            </div>
+          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-8">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Turnkey engineering & installation workflow.
+            </h2>
             <ArrowLink to="/services" className="shrink-0">
               All engineering services
             </ArrowLink>
@@ -564,17 +533,11 @@ export function Home() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
       >
         <div className="mx-auto grid w-full max-w-[1440px] items-center gap-8 px-4 sm:px-6 md:px-10 lg:grid-cols-[1fr_1.2fr] lg:gap-14 lg:px-12 xl:px-16">
-          <div className="gsap-fade-item">
-            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+          <div className="gsap-fade-item flex flex-col justify-center">
+            <h2 className="text-[clamp(26px,3.4vw,42px)] leading-[1.15] text-primary">
               Engineering & service support across Gujarat.
             </h2>
-            <p className="mt-3.5 max-w-[480px] text-[14.5px] leading-relaxed text-gray-700">
-              From initial shaft dimensions assessment, equipment manufacturing, precision
-              mechanical erection to statutory government inspections and ongoing 24/7 breakdown
-              assistance, our certified technicians support builders, architects and facility
-              managers in Ahmedabad and Baroda.
-            </p>
-            <div className="mt-6">
+            <div className="mt-6 sm:mt-8">
               <ArrowLink to="/contact">Discuss maintenance & contracts</ArrowLink>
             </div>
           </div>
@@ -609,16 +572,10 @@ export function Home() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 md:mb-8 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Multi-layered elevator safety architecture.
-              </h2>
-              <p className="mt-1.5 max-w-[580px] text-[14.5px] leading-relaxed text-gray-700">
-                Every elevator manufactured by Premium Elevators incorporates active and passive
-                safety measures certified to IS 14665 and National Building Code specifications.
-              </p>
-            </div>
+          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-8">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Multi-layered elevator safety architecture.
+            </h2>
             <ArrowLink to="/contact" className="shrink-0">
               Safety compliance queries
             </ArrowLink>
@@ -666,14 +623,13 @@ export function Home() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-6 sm:py-8 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-6 md:mb-8">
+          <div className="gsap-section-header mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center md:mb-8">
             <h2 className="max-w-[960px] text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
               Certified safety & standards compliance.
             </h2>
-            <p className="mt-1.5 max-w-[580px] text-[14.5px] leading-relaxed text-gray-700">
-              Every elevator conforms to Indian Standard IS 14665, National Building Code (NBC 2016)
-              regulations and Gujarat Lift Inspection Authority directives for fail-safe vertical transit.
-            </p>
+            <ArrowLink to="/contact" className="shrink-0">
+              Request compliance record
+            </ArrowLink>
           </div>
           <div className="gsap-card-grid grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {authorityBacklinks.map((auth) => (

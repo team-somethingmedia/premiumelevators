@@ -134,15 +134,10 @@ export function About() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-4 sm:py-6 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-4 sm:mb-6 flex flex-col justify-between gap-2 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Engineering vision & core principles.
-              </h2>
-              <p className="mt-1.5 max-w-[580px] text-[14px] leading-relaxed text-gray-700 md:text-[15px]">
-                {companyVision.statement}
-              </p>
-            </div>
+          <div className="gsap-section-header mb-4 sm:mb-6 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Engineering vision & core principles.
+            </h2>
             <ArrowLink to="/services" className="shrink-0">
               Explore service standards
             </ArrowLink>
@@ -209,16 +204,10 @@ export function About() {
         className="section-frame flex min-h-[calc(100svh-86px)] lg:h-[calc(100svh-86px)] lg:max-h-[calc(100svh-86px)] flex-col justify-center overflow-hidden border-b border-primary/20 py-4 sm:py-6 lg:py-6"
       >
         <div className="mx-auto w-full max-w-[1440px] px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
-          <div className="gsap-section-header mb-4 sm:mb-5 flex flex-col justify-between gap-2 md:flex-row md:items-end">
-            <div>
-              <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
-                Our engineering journey across Gujarat.
-              </h2>
-              <p className="mt-1 max-w-[580px] text-[14px] leading-relaxed text-gray-700 md:text-[15px]">
-                An ascending trajectory from specialized home lift engineering to hospital
-                infrastructure, heavy freight and high-speed commercial transit.
-              </p>
-            </div>
+          <div className="gsap-section-header mb-4 sm:mb-5 flex flex-col justify-between gap-2 sm:flex-row sm:items-center">
+            <h2 className="text-[clamp(24px,3.2vw,38px)] leading-[1.15] text-primary">
+              Our engineering journey across Gujarat.
+            </h2>
             <ArrowLink to="/contact" className="shrink-0">
               Plan your lift with us
             </ArrowLink>
